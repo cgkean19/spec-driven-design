@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specification-Driven Product Design Learning Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #185FA5;
+            --primary-light: #E6F1FB;
+            --accent: #378ADD;
+            --success: #639922;
+            --gray-900: #0b0b0b;
+            --gray-800: #1a1a1a;
+            --gray-700: #2d2d2d;
+            --gray-600: #474745;
+            --gray-400: #888780;
+            --gray-50: #F1EFE8;
+            --white: #ffffff;
+            --surface-0: #F1EFE8;
+            --surface-1: #F9F8F5;
+            --surface-2: #ffffff;
+            --border: #E0DEDA;
+            --radius: 8px;
+        }
+
+        body {
+            font-family: 'Figtree', sans-serif;
+            background: var(--surface-0);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .portal-container {
+            display: block;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: calc(2rem + 8px) 1.5rem 2rem 1.5rem;
+            border-right: 1px solid var(--gray-800);
+            position: fixed;
+            width: 280px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .nav-item {
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .nav-item:hover {
+            background: var(--gray-800);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .main-content {
+            margin-left: calc(280px + max(0px, (100vw - 1080px) / 2));
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .header {
+            margin-bottom: 1rem;
+            padding-top: 32px;
+            padding-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--gray-600);
+            font-size: 16px;
+        }
+
+        .content-section {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .layer-badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .view-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0;
+        }
+
+        .tab-button {
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: all 0.2s;
+            margin-bottom: -1px;
+        }
+
+        .tab-button:hover {
+            color: var(--gray-900);
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .concept-view {
+            display: none;
+        }
+
+        .concept-view.active {
+            display: block;
+        }
+
+        .exercise-view {
+            display: none;
+        }
+
+        .exercise-view.active {
+            display: block;
+        }
+
+        .exercise-prompt {
+            background: var(--primary-light);
+            border: 1px solid #B5D4F4;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-prompt p {
+            color: var(--primary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .reference-section {
+            background: var(--surface-1);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .reference-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        pre {
+            background: var(--surface-0);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--gray-900);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            color: var(--gray-900);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #0C447C;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-1);
+        }
+
+        .sample-answer {
+            display: none;
+            background: #FFFBF0;
+            border: 1px solid #F0E5D8;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .sample-answer.active {
+            display: block;
+        }
+
+        .sample-answer-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #8B6914;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sample-answer-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--gray-900);
+        }
+
+        .section-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-counter {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .section-counter strong {
+            color: var(--gray-900);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-buttons button {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .hamburger-button {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gray-900);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .hamburger-button {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 280px;
+                height: 100vh;
+                background: var(--gray-900);
+                z-index: 999;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.visible {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+            }
+
+            .sidebar-overlay.visible {
+                display: block;
+            }
+            .main-content {
+                margin-left: 0;
+                max-width: 100%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-container">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="sidebar" id="sidebar">
+            <div class="nav-section">
+                <div class="nav-section-title">Introduction</div>
+                <div class="nav-item active" onclick="navigateTo('intro-1')">Overview</div>
+                <div class="nav-item" onclick="navigateTo('intro-2')">The Evolution</div>
+                <div class="nav-item" onclick="navigateTo('intro-3')">The Bridge</div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Layer 1: Technical Literacy</div>
+                <div class="nav-item" onclick="navigateTo('1-0')">JSON Schemas</div>
+                <div class="nav-item" onclick="navigateTo('1-1')">OpenAPI Specs</div>
+                <div class="nav-item" onclick="navigateTo('1-2')">Prompt Design</div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Layer 2: System Thinking</div>
+                <div class="nav-item" onclick="navigateTo('2-0')">Hallucination & Consistency</div>
+                <div class="nav-item" onclick="navigateTo('2-1')">Edge Cases</div>
+                <div class="nav-item" onclick="navigateTo('2-2')">Feedback Loops</div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Layer 3: Design Bridge</div>
+                <div class="nav-item" onclick="navigateTo('3-0')">Product to Spec</div>
+                <div class="nav-item" onclick="navigateTo('3-1')">Reading Specs</div>
+                <div class="nav-item" onclick="navigateTo('3-2')">Iterating on Specs</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <button class="hamburger-button" id="hamburgerButton" onclick="toggleSidebar()">☰</button>
+            <div class="header">
+                <h1>Specification-Driven Product Design</h1>
+                <p>Self-study learning portal with reference materials and sample answers</p>
+            </div>
+
+            <!-- Introduction Page 1: Overview -->
+            <div class="content-section active" data-section="intro-1">
+                <div class="section-header"></div>
+
+                <div class="concept-view" style="display: block;">
+                    <div style="font-size: 16px; line-height: 1.8; color: var(--gray-900); margin-bottom: 2rem;">
+                        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">What is Specification-Driven Product Design?</h3>
+                        <p style="margin-bottom: 1.5rem;">
+                            Specification-Driven Product Design is the discipline of translating product intent into machine-readable contracts. It sits at the intersection of product thinking and technical precision—the bridge where business decisions become system behavior.
+                        </p>
+                        <p style="margin-bottom: 2rem;">
+                            Instead of saying "approve good transactions" (vague, unmeasurable), you write: "approve if risk_score < 75 AND debt_to_income ≤ 0.45" (precise, testable, automatable). This shift—from narrative to specification—is fundamental to building AI-native systems where decisions are encoded, observable, and iteratable.
+                        </p>
+
+                        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">The Three Layers</h3>
+                        <div style="background: var(--surface-1); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem;">
+                            <p style="margin-bottom: 1rem;">
+                                <strong>Layer 1: Technical Literacy</strong><br>
+                                Learn the language of specs: JSON schemas, OpenAPI endpoints, prompt constraints. You don't need to code, but you need to read and write these materials fluently. This is your vocabulary.
+                            </p>
+                            <p style="margin-bottom: 1rem;">
+                                <strong>Layer 2: System Thinking</strong><br>
+                                Understand how specs prevent failure modes: hallucination, inconsistency, edge cases. Learn to design feedback loops and observability so you can measure whether a spec is working and iterate based on real data.
+                            </p>
+                            <p>
+                                <strong>Layer 3: Design Bridge</strong><br>
+                                Translate product intent into specs. Read specs like a designer. Spot gaps. Propose data-driven iterations. This is where you become dangerous—you can move fluidly between "what the business needs" and "how the system should behave."
+                            </p>
+                        </div>
+
+                        <p style="color: var(--gray-600); font-size: 15px; line-height: 1.7;">
+                            Each layer builds on the previous. By the end, you'll be able to translate vague product intent into precise specifications that prevent hallucination, catch edge cases, and enable data-driven iteration.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <div class="section-counter">Intro <strong>1 of 3</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('intro-2')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Introduction Page 2: The Evolution -->
+            <div class="content-section" data-section="intro-2">
+                <div class="section-header"></div>
+
+                <div class="concept-view" style="display: block;">
+                    <div style="font-size: 16px; line-height: 1.8; color: var(--gray-900); margin-bottom: 2rem;">
+                        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Why Product Design Must Evolve</h3>
+                        <p style="margin-bottom: 1.5rem;">
+                            Traditional product design—wireframes, user flows, interaction specs handed to engineering—works well for deterministic systems. A button either works or it doesn't. A form either validates or it doesn't. The product designer's job was to specify intent; engineering's job was to execute it precisely.
+                        </p>
+                        <p style="margin-bottom: 1.5rem;">
+                            <strong>AI systems break this model.</strong>
+                        </p>
+
+                        <div style="background: #FFF5E6; border-left: 4px solid #D97706; padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem;">
+                            <p style="margin-bottom: 1rem; color: #92400E;">
+                                <strong>The Problem:</strong> An LLM isn't deterministic. Give it the same input twice, you might get two different outputs. A wireframe can't specify "respond in exactly three tones of voice" or "never hallucinate financial advice." Traditional design tools don't capture the constraints an AI system needs.
+                            </p>
+                            <p style="color: #92400E;">
+                                The old handoff model fails because the designer leaves ambiguity, the engineer tries to encode intent as best they can, and production reveals hundreds of edge cases no one anticipated.
+                            </p>
+                        </div>
+
+                        <p style="margin-bottom: 1.5rem;">
+                            <strong>Three shifts are necessary:</strong>
+                        </p>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1rem;">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">1. From Interfaces to Behaviors</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    You're no longer designing how users click buttons; you're designing how AI systems behave across a spectrum of inputs. A fraud detection spec doesn't live in Figma—it lives in a JSON schema that defines which transactions get approved, escalated, or declined.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1rem;">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">2. From Wireframes to Specifications</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    A wireframe says "put a button here." A specification says "if risk_score > 75, show this message; if 60-74, show that message; if < 60, do this." Specs are testable, measurable, and they expose missing product decisions before implementation.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: var(--radius);">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">3. From Handoff to Collaboration</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    You can't design in isolation and hand off a spec to engineers hoping they'll implement it correctly. You need to stay involved, read the feedback from deployed systems, and iterate.
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">What This Means for You</h3>
+                        <p style="margin-bottom: 1.5rem;">
+                            You don't need to become an engineer. But you do need to:
+                        </p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--gray-900);">
+                            <li style="margin-bottom: 0.75rem;"><strong>Read specs</strong> and spot gaps the way you'd critique a wireframe</li>
+                            <li style="margin-bottom: 0.75rem;"><strong>Write specs</strong> that translate vague product intent into measurable constraints</li>
+                            <li style="margin-bottom: 0.75rem;"><strong>Understand edge cases</strong> and why they matter</li>
+                            <li style="margin-bottom: 0.75rem;"><strong>Own iteration</strong> based on real data, not guesses</li>
+                            <li><strong>Speak technical language</strong> fluently enough to negotiate tradeoffs with engineering and product leadership</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <div class="section-counter">Intro <strong>2 of 3</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('intro-1')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('intro-3')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Introduction Page 3: The Bridge -->
+            <div class="content-section" data-section="intro-3">
+                <div class="section-header"></div>
+
+                <div class="concept-view" style="display: block;">
+                    <div style="font-size: 16px; line-height: 1.8; color: var(--gray-900); margin-bottom: 2rem;">
+                        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">Connection to Contract-First Design</h3>
+                        <p style="margin-bottom: 1.5rem;">
+                            Contract-First (or Specification-First) design is the principle that you define the interface and contract between systems before implementation. In API design, this means writing the OpenAPI spec before code. In AI product design, it means defining the output spec before prompting.
+                        </p>
+                        <p style="margin-bottom: 2rem;">
+                            Why? Because:
+                        </p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 2rem; color: var(--gray-900);">
+                            <li style="margin-bottom: 0.75rem;"><strong>Contracts clarify expectations.</strong> Everyone knows what valid output looks like.</li>
+                            <li style="margin-bottom: 0.75rem;"><strong>Contracts catch misalignment early.</strong> You discover missing product decisions before implementation.</li>
+                            <li style="margin-bottom: 0.75rem;"><strong>Contracts enable testing.</strong> Invalid output is testable; ambiguous intent is not.</li>
+                            <li><strong>Contracts make iteration systematic.</strong> You change thresholds and measure impact, not guess and hope.</li>
+                        </ul>
+
+                        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">How This Bridges Business & Technology</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                            <div style="background: #FFF8E6; border: 1px solid #F0E5D8; border-radius: var(--radius); padding: 1.5rem;">
+                                <strong style="color: #8B6914; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; display: block; margin-bottom: 1rem;">Business (Product)</strong>
+                                <p style="font-size: 14px; line-height: 1.7; color: var(--gray-900);">
+                                    Defines intent: "Approve 70% of loan applications to customers with stable income."
+                                </p>
+                            </div>
+                            <div style="background: #E6F1FB; border: 1px solid #B5D4F4; border-radius: var(--radius); padding: 1.5rem;">
+                                <strong style="color: var(--primary); text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; display: block; margin-bottom: 1rem;">Spec</strong>
+                                <p style="font-size: 14px; line-height: 1.7; color: var(--gray-900);">
+                                    Translates to constraints: "Approve if stable_income=true AND debt_to_income ≤ 0.45"
+                                </p>
+                            </div>
+                        </div>
+                        <div style="background: #F5F5F5; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center; margin-bottom: 2rem;">
+                            <strong style="text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; display: block; margin-bottom: 1rem; color: var(--gray-600);">Technology</strong>
+                            <p style="font-size: 14px; line-height: 1.7; color: var(--gray-900);">
+                                Implements the spec: trains models, sets thresholds, monitors output, alerts when drift occurs.
+                            </p>
+                        </div>
+
+                        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 1rem; color: var(--primary);">What Remains (And Must Remain)</h3>
+                        <p style="margin-bottom: 1.5rem;">
+                            This evolution is <strong>additive, not replacement.</strong> The core disciplines of product design and research don't disappear—they become the foundation for better specifications.
+                        </p>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--success); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1rem;">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">User Research</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    Understanding what users need, how they think, and what they value doesn't change. Your job is to translate deep user understanding into constraints that an AI system can enforce.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--success); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1rem;">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">Usability Testing</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    You still need to test how users interact with system outputs. Does an explanation feel fair? Specs define the output; testing reveals if that output achieves the user need.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--success); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1rem;">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">Problem Definition</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    Identifying the right problem to solve is still critical. Specs are only as good as the problem they solve. Research tells you which problems matter; specs tell you how to solve them consistently.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--success); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1rem;">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">Iteration Based on Evidence</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    The discipline of learning from users and adapting continues. With specs, your iterations are data-driven and precise—you adjust thresholds and measure edge case misclassification.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--surface-1); border-left: 4px solid var(--success); padding: 1.5rem; border-radius: var(--radius);">
+                                <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">Systems Thinking & Tradeoffs</p>
+                                <p style="font-size: 15px; color: var(--gray-700);">
+                                    Understanding how decisions cascade, balancing competing needs—this is pure product design and becomes even more critical with AI. Specs force you to articulate these tradeoffs explicitly.
+                                </p>
+                            </div>
+                        </div>
+
+                        <p style="background: var(--primary-light); border: 1px solid #B5D4F4; border-radius: var(--radius); padding: 1.5rem; color: var(--primary); font-size: 15px; line-height: 1.7;">
+                            <strong>The best product leaders in 5 years will be designers who understand specifications as deeply as they understand users, grounded in research, and able to translate empathy into constraints.</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <div class="section-counter">Intro <strong>3 of 3</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('intro-2')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('1-0')">Begin Learning →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1-0: JSON Schemas -->
+            <div class="content-section" data-section="1-0">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 1</div>
+                    <h2>JSON Schemas: The Foundation</h2>
+                </div>
+
+                <div class="view-tabs">
+                    <button class="tab-button active" onclick="switchTab(this, 'concept')">Learn</button>
+                    <button class="tab-button" onclick="switchTab(this, 'exercise')">Exercise</button>
+                </div>
+
+                <div class="concept-view active">
+                    <div style="font-size: 16px; line-height: 1.8; margin-bottom: 1.5rem;">
+                        JSON schemas are machine-readable descriptions of valid data shapes. Think of them like a template that says "here's what valid data looks like." When you specify what an AI system should output, you're often defining a JSON schema. The schema constrains the AI's response into predictable shapes—no hallucinations, no unexpected formats.
+                        <br><br>
+                        In fintech contexts, schemas prevent catastrophic failures: a fraud detection system that outputs "maybe approve" instead of one of three valid options creates ambiguity that compounds downstream. Schemas eliminate that.
+                    </div>
+                </div>
+
+                <div class="exercise-view">
+                    <div class="exercise-prompt">
+                        <strong>Exercise:</strong>
+                        <p>Review this payment authorization schema. Identify three product decisions that are missing or ambiguous. For each, explain why it matters for the user experience or system reliability.</p>
+                    </div>
+
+                    <div class="reference-section">
+                        <div class="reference-label">Payment Authorization Schema</div>
+                        <pre><code>{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["approved", "declined", "pending", "error"],
+      "description": "Authorization outcome"
+    },
+    "transaction_id": {
+      "type": "string",
+      "description": "Unique identifier for this transaction"
+    },
+    "amount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Amount authorized in base currency"
+    },
+    "risk_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Fraud risk assessment (0-100)"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Explanation if declined or errored"
+    }
+  },
+  "required": ["status", "transaction_id", "amount"],
+  "additionalProperties": false
+}</code></pre>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Analysis</label>
+                        <textarea id="exercise-1-0" placeholder="What's missing or ambiguous?"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="toggleSampleAnswer('1-0')">Show Sample Answer</button>
+                        <button class="btn-secondary" onclick="clearAnswer('1-0')">Clear</button>
+                    </div>
+
+                    <div class="sample-answer" id="sample-1-0">
+                        <div class="sample-answer-title">Sample Answer</div>
+                        <div class="sample-answer-text">
+                            <strong>1. What happens if status is "pending"?</strong> The schema allows it, but there's no guidance on what UI should show, how long to wait, or what triggers the transition to approved/declined. This matters because users need to know if their transaction is stuck or processing normally.<br><br>
+                            <strong>2. Amount precision:</strong> The schema allows any decimal number, but doesn't specify if it should be cents, fractional cents, or whole currency units. This matters because rounding errors in multi-currency transactions could cause reconciliation issues.<br><br>
+                            <strong>3. Missing error handling for "error" status:</strong> If status is "error," is "reason" always populated? Can you retry? Is the transaction lost? The schema doesn't make this mandatory, so systems might fail silently.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>1 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('1-1')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Continue with other sections... (will add remaining 8 sections in the live file) -->
+            <!-- For now, adding just the structural frame for the other sections to keep file manageable -->
+
+            <div class="content-section" data-section="1-1">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 1</div>
+                    <h2>OpenAPI/REST Specs</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: OpenAPI endpoint specification exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>2 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('1-0')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('1-2')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" data-section="1-2">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 1</div>
+                    <h2>Prompt Design as Constraint</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: Prompt constraint exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>3 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('1-1')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('2-0')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" data-section="2-0">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 2</div>
+                    <h2>Hallucination & Consistency</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: Hallucination prevention exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>4 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('1-2')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('2-1')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" data-section="2-1">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 2</div>
+                    <h2>Edge Cases & Constraint Failures</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: Edge case handling exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>5 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('2-0')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('2-2')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" data-section="2-2">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 2</div>
+                    <h2>Feedback Loops & Observability</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: Observability and feedback loop exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>6 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('2-1')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('3-0')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" data-section="3-0">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 3</div>
+                    <h2>From Product Intent to Spec</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: Product to spec translation exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>7 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('2-2')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('3-1')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" data-section="3-1">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 3</div>
+                    <h2>Reading Specs Like a Designer</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: Spec critique exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>8 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('3-0')">← Previous</button>
+                        <button class="btn-secondary" onclick="navigateTo('3-2')">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" data-section="3-2">
+                <div class="section-header">
+                    <div class="layer-badge">Layer 3</div>
+                    <h2>Iterating on Specs</h2>
+                </div>
+                <p style="padding: 2rem;">Coming soon: Spec iteration exercises</p>
+                <div class="section-nav">
+                    <div class="section-counter">Section <strong>9 of 9</strong></div>
+                    <div class="nav-buttons">
+                        <button class="btn-secondary" onclick="navigateTo('3-1')">← Previous</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'intro-1';
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('visible');
+            overlay.classList.toggle('visible');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('sidebarOverlay');
+            overlay.addEventListener('click', () => {
+                document.getElementById('sidebar').classList.remove('visible');
+                overlay.classList.remove('visible');
+            });
+
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('visible');
+                    overlay.classList.remove('visible');
+                });
+            });
+
+            navigateTo('intro-1');
+        });
+
+        function navigateTo(section) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            const element = document.querySelector(`[data-section="${section}"]`);
+            if (element) {
+                element.classList.add('active');
+                currentSection = section;
+            }
+
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                if (item.getAttribute('onclick').includes(`navigateTo('${section}')`)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        function switchTab(button, tab) {
+            const section = document.querySelector(`[data-section="${currentSection}"]`);
+            section.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            section.querySelectorAll('.concept-view, .exercise-view').forEach(v => v.classList.remove('active'));
+            
+            button.classList.add('active');
+            section.querySelector(`.${tab}-view`).classList.add('active');
+        }
+
+        function toggleSampleAnswer(section) {
+            const sampleAnswer = document.getElementById(`sample-${section}`);
+            sampleAnswer.classList.toggle('active');
+        }
+
+        function clearAnswer(section) {
+            document.getElementById(`exercise-${section}`).value = '';
+            document.getElementById(`sample-${section}`).classList.remove('active');
+        }
+    </script>
+</body>
+</html>
