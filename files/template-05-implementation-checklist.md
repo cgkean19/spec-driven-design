@@ -138,7 +138,7 @@ This checklist ensures every line of the Shared Specification has been implement
 
 - [ ] Requires valid credentials
 - [ ] Returns 401 if invalid
-- [ ] Returns 403 if unauthorized
+- [ ] Returns 403 if unauthorised
 
 ---
 

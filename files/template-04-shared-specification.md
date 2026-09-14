@@ -138,7 +138,7 @@ Content-Type: application/problem+json
 ## Idempotency
 
 **Rule:** [What makes a request idempotent?]  
-**Behavior:** [What happens if same key is sent twice?]  
+**Behaviour:** [What happens if same key is sent twice?]  
 **Use Case:** [When/why would client use this?]
 
 ---

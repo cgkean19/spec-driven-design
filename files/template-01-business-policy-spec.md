@@ -60,7 +60,7 @@ Briefly explain:
 
 ### State 1: [Failure Reason]
 **Trigger:** [What causes this state?]  
-**Behavior:** [What does the system do?]  
+**Behaviour:** [What does the system do?]  
 **User Experience:** [What does the user see?]  
 **Metric:** [What do we track?]  
 **Recovery:** [Can the user fix this? How?]

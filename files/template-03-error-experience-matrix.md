@@ -70,7 +70,7 @@ This matrix maps every possible outcome (success and failure) to:
 | **Primary Message** | [Main text] |
 | **Supporting Details** | [Additional info] |
 | **Recovery Options** | [Option 1], [Option 2] |
-| **Tone** | [Helpful/non-judgmental] |
+| **Tone** | [Helpful/non-judgemental] |
 | **Design Notes** | [Visual guidance] |
 | **Copy Emphasis** | [What to clarify] |
 | **Accessibility** | [Screen reader guidance] |
@@ -147,7 +147,7 @@ This matrix maps every possible outcome (success and failure) to:
 - [ ] Form field errors use aria-describedby
 - [ ] Status messages are announced (aria-live)
 - [ ] Links and buttons are keyboard-navigable
-- [ ] Color is never the only indicator
+- [ ] Colour is never the only indicator
 - [ ] [Custom item]
 - [ ] [Custom item]
 

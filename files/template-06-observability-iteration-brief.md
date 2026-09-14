@@ -154,7 +154,7 @@ This defines:
 **Decisions Made:**
 - Policy/rule adjustments
 - Staffing/capacity changes
-- Feature prioritization
+- Feature prioritisation
 
 ---
 
