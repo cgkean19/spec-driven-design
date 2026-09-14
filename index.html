@@ -416,7 +416,7 @@
         <div class="sidebar" id="sidebar">
             <div class="nav-section">
                 <div class="nav-section-title">Start Here</div>
-                <button class="nav-link active" onclick="goToPage('why')">Why Specs Win</button>
+                <button class="nav-link active" onclick="goToPage('why')">Introduction</button>
                 <button class="nav-link" onclick="goToPage('foundations')">Organisational Foundations</button>
                 <button class="nav-link" onclick="goToPage('scenario')">The Scenario</button>
                 <button class="nav-link" onclick="goToPage('workflow')">The Workflow</button>
@@ -477,8 +477,26 @@
 
             <!-- WHY SPECS WIN PAGE -->
             <div class="page active" id="page-why">
-                <h1>Why Specification-Driven Design Wins</h1>
+                <h1>Introduction</h1>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;">Before the foundations, the workflow, or the templates - what Specification-Driven Design actually is, and why it's the more effective way to deliver product today.</p>
+
+                <h2>What Is Specification-Driven Design?</h2>
+                <p>Specification-Driven Design (SDD) is the practice of translating product intent into explicit, testable, machine-readable contracts before anything gets built - instead of relying on prose requirements that every reader, human or AI, has to interpret for themselves. A spec states precisely what valid input looks like, what valid output looks like, and what happens in every failure case. Nothing is left to inference.</p>
+
+                <div class="role-grid">
+                    <div class="role-card">
+                        <div class="role-title">The Traditional Way</div>
+                        <p>Business says: "Free users need email verification." Everyone downstream - Product, Design, Tech, QA - fills in the details themselves, and usually fills them in differently.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">The Spec-Driven Way</div>
+                        <p>"POST /signup requires email. Email must be valid. User gets a verification link. Link expires after 24h. If expired, user can re-request." Every edge case is explicit, and there's only one way to read it.</p>
+                    </div>
+                </div>
+
                 <p style="color: var(--gray-600); margin-bottom: 2rem;">Traditional requirements-gathering was built for a world where humans read documents and humans wrote every line of code. That world doesn't match how products get built anymore. Here's why specs, not prose, are the more effective foundation when AI agents and APIs sit in the middle of your delivery lifecycle.</p>
+
+                <h2>Why Specs Win</h2>
 
                 <div class="context-box">
                     <strong>The Core Problem:</strong> Ambiguity used to cost you a Slack thread and a day of back-and-forth. Today it costs you an AI agent confidently generating the wrong thing, an API contract that doesn't match what three different clients assumed, and nobody noticing until production. Ambiguity is now the most expensive defect in the pipeline - and it's the one thing a specification is designed to remove.
