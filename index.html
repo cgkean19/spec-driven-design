@@ -60,6 +60,13 @@
             margin-left: 280px;
             flex: 1;
             padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-wrap {
+            width: 100%;
             max-width: 900px;
         }
 
@@ -222,14 +229,14 @@
             margin-bottom: 1rem;
         }
 
-        .checklist-item {
-            margin-bottom: 0.75rem;
-            font-size: 14px;
+        .checklist-list {
+            margin: 0;
+            padding-left: 1.25rem;
         }
 
-        .checklist-item input {
-            margin-right: 0.5rem;
-            cursor: pointer;
+        .checklist-list li {
+            margin-bottom: 0.5rem;
+            font-size: 14px;
         }
 
         .tabs {
@@ -305,6 +312,7 @@
 
         .hamburger {
             display: none;
+            align-self: flex-start;
             background: none;
             border: none;
             color: var(--gray-900);
@@ -394,7 +402,7 @@
         <div class="sidebar" id="sidebar">
             <div class="nav-section">
                 <div class="nav-section-title">Start Here</div>
-                <button class="nav-link active" onclick="goToPage('foundations')">Organizational Foundations</button>
+                <button class="nav-link active" onclick="goToPage('foundations')">Organisational Foundations</button>
                 <button class="nav-link" onclick="goToPage('scenario')">The Scenario</button>
                 <button class="nav-link" onclick="goToPage('workflow')">The Workflow</button>
                 <button class="nav-link" onclick="goToPage('templates')">Download Templates</button>
@@ -432,7 +440,7 @@
                 <button class="nav-link" onclick="goToPage('3-0')">Intent to Spec</button>
                 <button class="nav-link" onclick="goToPage('3-1')">Reading Specs</button>
                 <button class="nav-link" onclick="goToPage('3-2')">Data-Driven Iteration</button>
-                <button class="nav-link" onclick="goToPage('3-3')">Authorization</button>
+                <button class="nav-link" onclick="goToPage('3-3')">Authorisation</button>
                 <button class="nav-link" onclick="goToPage('3-4')">Reconciliation</button>
             </div>
 
@@ -450,32 +458,44 @@
         <div class="main">
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
 
+            <div class="content-wrap">
+
             <!-- FOUNDATIONS PAGE -->
             <div class="page active" id="page-foundations">
-                <h1>Organizational Foundations</h1>
-                <p style="color: var(--gray-600); margin-bottom: 2rem;">Specification-Driven Design isn't just a practice—it's a system. Your organization needs foundations across four dimensions: organizational structure, process discipline, technical capability, and cultural mindset.</p>
+                <h1>Organisational Foundations</h1>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;">Specification-Driven Design isn't just a practice—it's a system. Your organisation needs foundations across four dimensions: organisational structure, process discipline, technical capability, and cultural mindset.</p>
 
-                <h2>Tier 1: Organizational (Non-Negotiable)</h2>
+                <div class="info-box">
+                    <strong>Scope note:</strong> Every foundation below is achievable within a product designer's growing skill-set — this is about adding strings to your bow, not becoming an engineer. Tooling like a fully-fledged design system wired into AI tools (e.g. Claude Code) is <em>not</em> one of these foundations: it's an accelerator you reach for once Tiers 1–3 are solid, not a gate you need to pass through first. Teams commonly get this backwards, investing in tooling before nailing the cross-functional collaboration and sign-off discipline that specs actually depend on.
+                </div>
+
+                <h2>Tier 1: Organisational (Non-Negotiable)</h2>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Cross-Functional Collaboration</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Business, Product, Design, and Tech sit together. Clear roles. Regular sync points. Authority established upfront.</p>
-                    <label class="checklist-item"><input type="checkbox"> Team aligned on roles and decision authority</label>
-                    <label class="checklist-item"><input type="checkbox"> Cross-functional group meets regularly (weekly/bi-weekly)</label>
+                    <ul class="checklist-list">
+                        <li>Team aligned on roles and decision authority</li>
+                        <li>Cross-functional group meets regularly (weekly/bi-weekly)</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Shared Mental Model</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">All roles understand the business problem. Common vocabulary. Everyone knows what a spec is and why it matters.</p>
-                    <label class="checklist-item"><input type="checkbox"> Shared vocabulary across all roles (RFC 7807, state machines, SLA, etc.)</label>
-                    <label class="checklist-item"><input type="checkbox"> Everyone sees specs as contracts, not suggestions</label>
+                    <ul class="checklist-list">
+                        <li>Shared vocabulary across all roles (RFC 7807, state machines, SLA, etc.)</li>
+                        <li>Everyone sees specs as contracts, not suggestions</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Time Budget for Specs</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Front-load time: 2–4 weeks upfront before implementation. Specs are investment, not delay. Plan for iteration.</p>
-                    <label class="checklist-item"><input type="checkbox"> Roadmap includes specification phases</label>
-                    <label class="checklist-item"><input type="checkbox"> Team has budget for spec review and sign-off cycles</label>
+                    <ul class="checklist-list">
+                        <li>Roadmap includes specification phases</li>
+                        <li>Team has budget for spec review and sign-off cycles</li>
+                    </ul>
                 </div>
 
                 <h2>Tier 2: Process (Essential)</h2>
@@ -483,22 +503,28 @@
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Structured Workflow</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Defined phases with clear entry/exit criteria and handoff points.</p>
-                    <label class="checklist-item"><input type="checkbox"> Workflow phases documented (Audit → Policy → Requirements → Design+Tech → Implementation → Observability)</label>
-                    <label class="checklist-item"><input type="checkbox"> Clear handoff criteria between phases</label>
+                    <ul class="checklist-list">
+                        <li>Workflow phases documented (Audit → Policy → Requirements → Design+Tech → Implementation → Observability)</li>
+                        <li>Clear handoff criteria between phases</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Sign-Off Discipline</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Specs reviewed and approved before next phase. Sign-off table binds each role. Changes require re-approval.</p>
-                    <label class="checklist-item"><input type="checkbox"> Spec sign-off table with Business, Product, Design, Tech approval</label>
-                    <label class="checklist-item"><input type="checkbox"> Sign-off is binding; implementation follows spec</label>
+                    <ul class="checklist-list">
+                        <li>Spec sign-off table with Business, Product, Design, Tech approval</li>
+                        <li>Sign-off is binding; implementation follows spec</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Gradual Rollout + Metrics</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Feature flags: 5% → 10% → 25% → 100%. Rollback if metrics miss. Weekly review.</p>
-                    <label class="checklist-item"><input type="checkbox"> Feature flags or canary deployment capability exists</label>
-                    <label class="checklist-item"><input type="checkbox"> Metrics dashboard updates real-time (hourly, not weekly)</label>
+                    <ul class="checklist-list">
+                        <li>Feature flags or canary deployment capability exists</li>
+                        <li>Metrics dashboard updates real-time (hourly, not weekly)</li>
+                    </ul>
                 </div>
 
                 <h2>Tier 3: Technical (Critical)</h2>
@@ -506,55 +532,71 @@
                 <div class="checklist-box">
                     <div class="checklist-title">✓ API Design Capability</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Team understands OpenAPI, REST principles, HTTP semantics, RFC 7807 error handling.</p>
-                    <label class="checklist-item"><input type="checkbox"> Team familiar with OpenAPI/Swagger standards</label>
-                    <label class="checklist-item"><input type="checkbox"> Standard error format (RFC 7807 or equivalent)</label>
+                    <ul class="checklist-list">
+                        <li>Team familiar with OpenAPI/Swagger standards</li>
+                        <li>Standard error format (RFC 7807 or equivalent)</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Observability Infrastructure</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Structured logging, metrics pipeline, dashboards, alerts.</p>
-                    <label class="checklist-item"><input type="checkbox"> Structured logging (JSON events with consistent schema)</label>
-                    <label class="checklist-item"><input type="checkbox"> Metrics dashboards for business, operational, and UX metrics</label>
+                    <ul class="checklist-list">
+                        <li>Structured logging (JSON events with consistent schema)</li>
+                        <li>Metrics dashboards for business, operational, and UX metrics</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Feature Flags & A/B Testing</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Control traffic % without deploying. A/B test framework. Config-as-data. Instant rollback.</p>
-                    <label class="checklist-item"><input type="checkbox"> Feature flag infrastructure (deploy to 5% without full release)</label>
-                    <label class="checklist-item"><input type="checkbox"> A/B testing framework</label>
+                    <ul class="checklist-list">
+                        <li>Feature flag infrastructure (deploy to 5% without full release)</li>
+                        <li>A/B testing framework</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Version Control for Specs</div>
                     <p style="font-size: 14px; margin-bottom: 1rem;">Specs in Git. Version history. Sign-off history. Compare versions.</p>
-                    <label class="checklist-item"><input type="checkbox"> Specs stored in version control (Git)</label>
-                    <label class="checklist-item"><input type="checkbox"> Audit trail of changes and approvals</label>
+                    <ul class="checklist-list">
+                        <li>Specs stored in version control (Git)</li>
+                        <li>Audit trail of changes and approvals</li>
+                    </ul>
                 </div>
 
                 <h2>Tier 4: Cultural (The Hardest Part)</h2>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Belief That Specs Reduce Total Cost</div>
-                    <label class="checklist-item"><input type="checkbox"> Leadership believes upfront clarity saves time overall</label>
-                    <label class="checklist-item"><input type="checkbox"> Team willing to invest 2–4 weeks in specs before implementation</label>
+                    <ul class="checklist-list">
+                        <li>Leadership believes upfront clarity saves time overall</li>
+                        <li>Team willing to invest 2–4 weeks in specs before implementation</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Hard Conversations Upfront</div>
-                    <label class="checklist-item"><input type="checkbox"> Team comfortable saying "this is ambiguous, we need to clarify"</label>
-                    <label class="checklist-item"><input type="checkbox"> No shame in discovering conflicts during spec phase</label>
+                    <ul class="checklist-list">
+                        <li>Team comfortable saying "this is ambiguous, we need to clarify"</li>
+                        <li>No shame in discovering conflicts during spec phase</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Acceptance That Specs Evolve</div>
-                    <label class="checklist-item"><input type="checkbox"> First version won't be perfect; iteration is expected</label>
-                    <label class="checklist-item"><input type="checkbox"> Spec changes post-approval are normal, not failures</label>
+                    <ul class="checklist-list">
+                        <li>First version won't be perfect; iteration is expected</li>
+                        <li>Spec changes post-approval are normal, not failures</li>
+                    </ul>
                 </div>
 
                 <div class="checklist-box">
                     <div class="checklist-title">✓ Data-Driven Mindset</div>
-                    <label class="checklist-item"><input type="checkbox"> Decisions based on data, not opinions</label>
-                    <label class="checklist-item"><input type="checkbox"> Post-launch iteration driven by metrics</label>
+                    <ul class="checklist-list">
+                        <li>Decisions based on data, not opinions</li>
+                        <li>Post-launch iteration driven by metrics</li>
+                    </ul>
                 </div>
 
                 <div class="context-box">
@@ -765,7 +807,7 @@
                 <p>Traditional design works for simple, deterministic systems. But modern products are complex: distributed systems, AI, multi-step workflows, third-party integrations. These systems break traditional design patterns.</p>
 
                 <h2>Three Critical Shifts</h2>
-                <p><strong>1. From Interfaces to Behaviors</strong><br>You're designing how systems behave across all failure modes, not just how users click buttons. What happens when email verification times out? When fraud is detected? When the system is overloaded?</p>
+                <p><strong>1. From Interfaces to Behaviours</strong><br>You're designing how systems behave across all failure modes, not just how users click buttons. What happens when email verification times out? When fraud is detected? When the system is overloaded?</p>
                 <p><strong>2. From Wireframes to Specifications</strong><br>Specs are testable, measurable, and expose missing decisions before implementation. You catch ambiguities upfront, not during code review.</p>
                 <p><strong>3. From Handoff to Collaboration</strong><br>You stay involved, read production metrics, and iterate based on real data. Specs aren't handed off and forgotten; they evolve with learnings.</p>
 
@@ -862,7 +904,7 @@
             <!-- LAYER 1 REMAINING SECTIONS (condensed stubs) -->
             <div class="page" id="page-1-1">
                 <div class="layer-badge">Layer 1</div>
-                <h1>API Endpoints & Behavioral Constraints</h1>
+                <h1>API Endpoints & Behavioural Constraints</h1>
                 <div class="context-box">
                     <strong>In the Scenario:</strong> Signup logic is spread across multiple services. We're building a unified API contract so all clients understand what requests look like, what responses to expect, and all possible failures.
                 </div>
@@ -875,7 +917,7 @@
 
             <div class="page" id="page-1-2">
                 <div class="layer-badge">Layer 1</div>
-                <h1>Prompt Constraints & AI Behavior</h1>
+                <h1>Prompt Constraints & AI Behaviour</h1>
                 <div class="context-box">
                     <strong>In the Scenario:</strong> Verification logic might use LLMs or decision engines. We're constraining outputs: structured format, consistent scoring, clear failure modes.
                 </div>
@@ -1046,7 +1088,7 @@
 
             <div class="page" id="page-3-3">
                 <div class="layer-badge">Layer 3</div>
-                <h1>Authorization & Permission Specs</h1>
+                <h1>Authorisation & Permission Specs</h1>
                 <div class="context-box">
                     <strong>In the Scenario:</strong> Can user see other users' verification status? Can support staff approve accounts? Permissions are part of the spec.
                 </div>
@@ -1096,6 +1138,7 @@
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 
