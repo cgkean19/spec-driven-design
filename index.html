@@ -187,6 +187,20 @@
             color: #16A34A;
         }
 
+        .template-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .template-download:hover {
+            text-decoration: underline;
+        }
+
         .role-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -755,24 +769,30 @@
 
                 <h2>Phase 1–2 Templates (Business + Product)</h2>
                 <p style="margin-bottom: 0.5rem;"><strong>Business Policy Specification</strong></p>
-                <p style="color: var(--gray-600); margin-bottom: 1rem;">Formal policies, rules, SLAs, failure scenarios. Owner: Business</p>
+                <p style="color: var(--gray-600); margin-bottom: 0.5rem;">Formal policies, rules, SLAs, failure scenarios. Owner: Business</p>
+                <a class="template-download" href="files/template-01-business-policy-spec.md" download>Download template →</a>
 
-                <p style="margin-bottom: 0.5rem;"><strong>Product Requirements Specification</strong></p>
-                <p style="color: var(--gray-600); margin-bottom: 1.5rem;">User flows, feature scope, success criteria. Owner: Product</p>
+                <p style="margin-bottom: 0.5rem; margin-top: 1.5rem;"><strong>Product Requirements Specification</strong></p>
+                <p style="color: var(--gray-600); margin-bottom: 0.5rem;">User flows, feature scope, success criteria. Owner: Product</p>
+                <a class="template-download" href="files/template-02-product-requirements-spec.md" download>Download template →</a>
 
-                <h2>Phase 3 Templates (Design + Tech)</h2>
+                <h2 style="margin-top: 2rem;">Phase 3 Templates (Design + Tech)</h2>
                 <p style="margin-bottom: 0.5rem;"><strong>Error Experience Matrix</strong></p>
-                <p style="color: var(--gray-600); margin-bottom: 1rem;">All outcomes → UI states → messages → recovery. Owner: Design</p>
+                <p style="color: var(--gray-600); margin-bottom: 0.5rem;">All outcomes → UI states → messages → recovery. Owner: Design</p>
+                <a class="template-download" href="files/template-03-error-experience-matrix.md" download>Download template →</a>
 
-                <p style="margin-bottom: 0.5rem;"><strong>Shared Specification</strong></p>
-                <p style="color: var(--gray-600); margin-bottom: 1.5rem;">API endpoints, RFC 7807, state machine. Owners: Tech + Design</p>
+                <p style="margin-bottom: 0.5rem; margin-top: 1.5rem;"><strong>Shared Specification</strong></p>
+                <p style="color: var(--gray-600); margin-bottom: 0.5rem;">API endpoints, RFC 7807, state machine. Owners: Tech + Design</p>
+                <a class="template-download" href="files/template-04-shared-specification.md" download>Download template →</a>
 
-                <h2>Phase 4–5 Templates (QA + Iteration)</h2>
+                <h2 style="margin-top: 2rem;">Phase 4–5 Templates (QA + Iteration)</h2>
                 <p style="margin-bottom: 0.5rem;"><strong>Implementation Checklist</strong></p>
-                <p style="color: var(--gray-600); margin-bottom: 1rem;">Line-by-line QA verification. Owners: Tech + QA + Design</p>
+                <p style="color: var(--gray-600); margin-bottom: 0.5rem;">Line-by-line QA verification. Owners: Tech + QA + Design</p>
+                <a class="template-download" href="files/template-05-implementation-checklist.md" download>Download template →</a>
 
-                <p style="margin-bottom: 0.5rem;"><strong>Observability & Iteration Brief</strong></p>
-                <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Metrics, dashboards, when to iterate. Owners: All roles</p>
+                <p style="margin-bottom: 0.5rem; margin-top: 1.5rem;"><strong>Observability & Iteration Brief</strong></p>
+                <p style="color: var(--gray-600); margin-bottom: 0.5rem;">Metrics, dashboards, when to iterate. Owners: All roles</p>
+                <a class="template-download" href="files/template-06-observability-iteration-brief.md" download>Download template →</a>
 
                 <div class="info-box">
                     <strong>Pro Tip:</strong> Each learning section shows a completed example (user onboarding scenario). Use it as a reference for what good looks like, then adapt the template for your own project.
