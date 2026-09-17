@@ -423,6 +423,7 @@
             <div class="nav-section">
                 <div class="nav-section-title">Start Here</div>
                 <button class="nav-link active" onclick="goToPage('why')">Introduction</button>
+                <button class="nav-link" onclick="goToPage('business-case')">The Business Case</button>
                 <button class="nav-link" onclick="goToPage('foundations')">Organisational Foundations</button>
                 <button class="nav-link" onclick="goToPage('scenario')">The Scenario</button>
                 <button class="nav-link" onclick="goToPage('workflow')">The Workflow</button>
@@ -585,6 +586,128 @@
                 </div>
 
                 <div class="nav-buttons">
+                    <button class="nav-button primary" onclick="goToPage('business-case')">Next: The Business Case →</button>
+                </div>
+            </div>
+
+            <!-- BUSINESS CASE PAGE -->
+            <div class="page" id="page-business-case">
+                <h1>The Business Case for Specification-Driven Design</h1>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;">The problems SDD solves, for the designer doing the work and the business funding it - plus a measurement framework for building the investment case, framed the way a corporate strategy or consulting analysis would present it.</p>
+
+                <div class="context-box">
+                    <strong>Bottom Line Up Front:</strong> SDD is not a design-team preference. It's a cost- and risk-reduction lever that compounds as AI coding agents and API surface area become the default way products get built. The less ambiguity your organisation ships downstream, the less it pays to unwind later - and that multiplier gets larger, not smaller, the more AI tooling you adopt.
+                </div>
+
+                <h2>The Problem, in Three Frames</h2>
+
+                <div class="role-grid">
+                    <div class="role-card">
+                        <div class="role-title">For the Product Designer</div>
+                        <p>Handoffs get reinterpreted downstream. Rework comes from misread requirements, not bad design. Error and edge-case handling drifts across platforms because nobody owns it explicitly. AI tools underperform when given vague prompts, so designers get blamed for "AI didn't get it right" when the real gap is unspecified intent.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">For Technology</div>
+                        <p>Engineers end up reverse-engineering the contract from screens and reasonable-sounding guesses, then become de facto requirements-writers mid-sprint for decisions nobody actually signed off. AI-generated code from a vague prompt still needs the same manual review as hand-written code, eroding the velocity gain that tooling spend was meant to buy. Tests end up encoding assumptions instead of a real contract, because there's no machine-readable definition of "correct" to test against.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">For the Business</div>
+                        <p>Schedules slip from ambiguity discovered late, not from execution speed. Inconsistent error handling erodes trust and shows up as support tickets and churn. Undocumented decisions create audit and compliance risk. AI tooling spend underperforms its promised ROI when the inputs it works from are still prose.</p>
+                    </div>
+                </div>
+
+                <h2>Why This Gets Worse, Not Better</h2>
+                <p>These aren't static problems - three shifts already underway make them compound over time:</p>
+
+                <div class="checklist-box">
+                    <div class="checklist-title">✓ AI Agents Scale Ambiguity</div>
+                    <p style="font-size: 14px; margin-bottom: 1rem;">A wrong assumption used to stay contained to one engineer's interpretation. An AI agent replicates that same wrong assumption at code-generation speed, across every file it touches, before anyone reviews it.</p>
+                </div>
+
+                <div class="checklist-box">
+                    <div class="checklist-title">✓ API Surface Area Keeps Growing</div>
+                    <p style="font-size: 14px; margin-bottom: 1rem;">More integrations, more partners, more internal services calling each other. Every undocumented contract today is a future integration failure - and the failure gets more expensive the more systems depend on it.</p>
+                </div>
+
+                <div class="checklist-box">
+                    <div class="checklist-title">✓ The Talent Differentiator Is Shifting</div>
+                    <p style="font-size: 14px; margin-bottom: 1rem;">As more implementation work moves to AI assistance, the scarce skill becomes writing precise intent, not writing code by hand. Teams without spec discipline get less leverage out of the same AI tooling spend as teams with it.</p>
+                </div>
+
+                <h2>What the External Evidence Says</h2>
+                <p>None of this is a novel claim - it's a restatement of findings that process-improvement and software-engineering research have shown for decades, now sharpened by AI tooling:</p>
+
+                <div class="role-grid">
+                    <div class="role-card">
+                        <div class="role-title">The Cost-of-Change Curve</div>
+                        <p>Widely cited across software engineering literature (originating with IBM's Systems Sciences Institute research): a defect caught at the design/requirements stage costs roughly an order of magnitude less to fix than the same defect caught in production. Specs move the catch point earlier.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">The CHAOS Report</div>
+                        <p>The Standish Group's long-running CHAOS research has repeatedly found incomplete or ambiguous requirements among the top-cited reasons IT projects run over budget, slip schedule, or fail outright - not lack of technical skill.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">AI-Assisted Productivity Studies</div>
+                        <p>GitHub's 2022 Copilot research found developers completed a well-defined coding task around 55% faster with AI assistance. The gain is conditional on the task being well-specified - the same "garbage in, garbage out" limit that applies to a junior engineer applies to an AI agent.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">Six Sigma's Cost of Poor Quality</div>
+                        <p>Quality-engineering practice has long separated prevention cost (specifying it right upfront) from failure cost (fixing it after the fact) - and consistently finds failure cost the larger of the two. SDD is a prevention-cost investment.</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>Read With Care:</strong> These are external, widely cited reference points, not a measurement of your organisation. Use them to frame the direction of the argument - then build your own case from the KPIs below, measured against your own baseline.
+                </div>
+
+                <h2>Building Your Own Measurement Framework</h2>
+                <p>Rather than asserting numbers that aren't yours, here's what to instrument before and after adoption so the case is built on your own data.</p>
+
+                <div class="checklist-box">
+                    <div class="checklist-title">✓ Leading Indicators (Process Health)</div>
+                    <p style="font-size: 14px; margin-bottom: 1rem;">Signals that show up early, before a feature ships.</p>
+                    <ul class="checklist-list">
+                        <li>% of features with a signed-off spec before implementation starts</li>
+                        <li>Average spec review-to-sign-off cycle time</li>
+                        <li>Number of ambiguity/clarification threads raised during the spec phase (more here is good - it means gaps surface before build, not after)</li>
+                    </ul>
+                </div>
+
+                <div class="checklist-box">
+                    <div class="checklist-title">✓ Lagging Indicators (Outcomes)</div>
+                    <p style="font-size: 14px; margin-bottom: 1rem;">Signals that show up after a feature ships.</p>
+                    <ul class="checklist-list">
+                        <li>Post-release defect rate for spec-driven features vs. prose-driven ones</li>
+                        <li>Design-to-engineering rework cycles per feature</li>
+                        <li>AI agent first-pass acceptance rate: % of AI-generated code or tests requiring no rework, spec-driven vs. prose-driven input</li>
+                        <li>Time-to-ship for comparable features, pre- and post-adoption</li>
+                        <li>Support tickets citing inconsistent or confusing error experiences across platforms</li>
+                    </ul>
+                </div>
+
+                <h2>What the Investment Actually Buys</h2>
+
+                <div class="role-grid">
+                    <div class="role-card">
+                        <div class="role-title">Training</div>
+                        <p>Technical literacy (Layer 1 of this pathway) is typically a multi-week ramp for designers who already think in Lean/Six Sigma-style discipline - not a re-skilling programme. See "You're Not Starting From Scratch" on the Introduction page.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">Process & Tooling</div>
+                        <p>Spec templates, a sign-off workflow, and version control for specs (all covered under Organisational Foundations). Mostly process discipline, not new infrastructure spend.</p>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-title">Engineering Practice</div>
+                        <p>A shared error taxonomy (RFC 7807 or equivalent), contract/schema validation in CI, and treating the spec - not the implementation - as the thing tests are written against. Formalises habits many engineering teams already have in pockets; the investment is consistency, not new skills.</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>Recommendation:</strong> Don't roll this out org-wide on faith. Pilot one team on one feature through the full spec-and-sign-off cycle, instrument the KPIs above against a comparable prose-driven feature, and use that data - not the external benchmarks - to make the scale-up case.
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="goToPage('why')">← Back</button>
                     <button class="nav-button primary" onclick="goToPage('foundations')">Next: Organisational Foundations →</button>
                 </div>
             </div>
@@ -733,7 +856,7 @@
                 </div>
 
                 <div class="nav-buttons">
-                    <button class="nav-button" onclick="goToPage('why')">← Back</button>
+                    <button class="nav-button" onclick="goToPage('business-case')">← Back</button>
                     <button class="nav-button primary" onclick="goToPage('scenario')">Next: The Scenario →</button>
                 </div>
             </div>
